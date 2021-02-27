@@ -7,6 +7,7 @@ sh = gc.open_by_url('https://docs.google.com/spreadsheets/d/17aL0l7sOI_S1Xdd9gG1
 
 hours_sheet = sh.sheet1
 
+#useless code
 
 #Check to see if new hours have been added.
 
