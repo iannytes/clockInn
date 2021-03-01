@@ -26,16 +26,20 @@ values = hours_sheet.row_values(2)
 def add_dates(col) :
     loop = 1
     for rows in hours_sheet.col_values(col):
+        loop = loop + 1 
         val = hours_sheet.cell(loop, col).value
-        #!!! find out how to not return an empty value on the end of your list.
-        if len(val) > 2:
-            loop = loop + 1
+        
+        #makes sure you dont return a blank value to end of list
+        if len(val) > 0:
+           
             val = hours_sheet.cell(loop, col).value
             datetimes.append(val)
+            print (len(val))
+            print (rows)
 
 add_dates(4)
 
-print(max(datetimes))
+print(datetimes)
 
 #Check to see what billable week is by pulling date in a block of 2 weeks.
 
