@@ -31,15 +31,24 @@ def add_dates(col) :
         
         #makes sure you dont return a blank value to end of list
         if len(val) > 0:
-           
+           if val not in datetimes:
             val = hours_sheet.cell(loop, col).value
             datetimes.append(val)
-            print (len(val))
-            print (rows)
-
+            
+           
 add_dates(4)
+print (datetimes)
+'''def get_pay_period(list):
+   last_date = min(list) + pay_period_delta
 
-print(datetimes)
+   print(min(datetimes))
+   print(last_date)
+    
+
+get_pay_period(datetimes)
+'''
+
+
 
 #Check to see what billable week is by pulling date in a block of 2 weeks.
 
