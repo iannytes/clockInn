@@ -1,8 +1,7 @@
 import gspread
-from pprint import PrettyPrinter as pprint
 import datetime
 
-from pyasn1.type.univ import Null
+
 
 
 gc = gspread.service_account(filename="sheets_auth.json")
@@ -11,19 +10,16 @@ current_date = datetime.datetime.now()
 
 # creates list of dates in program
 datetimes = []
-
-#finds earliesy date in list
-
-#variable for 2 week pay period interval
-pay_period_delta = datetime.timedelta(days=14)
+super_email = []
+employee_names = []
 
 
 hours_sheet = sh.sheet1
-values = hours_sheet.row_values(2)
+
 
 
 #Check all dates in sheet and add them to list (date col is 4)
-def add_dates(col) :
+def make_list(col, list) :
     loop = 1
     for rows in hours_sheet.col_values(col):
         loop = loop + 1 
@@ -31,27 +27,23 @@ def add_dates(col) :
         
         #makes sure you dont return a blank value to end of list
         if len(val) > 0:
-           if val not in datetimes:
+            #make sure the list has no repeats.
+           if val not in list:
             val = hours_sheet.cell(loop, col).value
-            datetimes.append(val)
+            list.append(val)
             
-           
-add_dates(4)
-print (datetimes)
-'''def get_pay_period(list):
-   last_date = min(list) + pay_period_delta
+        else:
+            print(list)
+def get_pay_period():
+    start_date = datetime.datetime.strptime(min(datetimes), "%m/%d/%y")
 
-   print(min(datetimes))
-   print(last_date)
-    
+    end_date = start_date + datetime.timedelta(days=14)
+    print(start_date)
+    print(end_date)
 
-get_pay_period(datetimes)
-'''
-
-
-
-#Check to see what billable week is by pulling date in a block of 2 weeks.
-
-#Email supervisors that have to verify hours worked with details entered by user
-
-
+            
+#creates list for super email names of employees and dates worked.        
+make_list(4, datetimes)
+make_list(1, employee_names)
+make_list(6, super_email)
+get_pay_period()
