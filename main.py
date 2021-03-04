@@ -24,26 +24,29 @@ def make_list(col, list) :
     for rows in hours_sheet.col_values(col):
         val = hours_sheet.cell(loop, col).value
         #makes sure you dont return a blank value to end of list
-        if len(val) > 0 :
+        try:   
+            if len(val) > 0 :
             #make sure the list has no repeats.
-           if val not in list :
-            list.append(val)
-            loop = loop + 1 
-        
-'''  
+                if val not in list :
+                    list.append(val)
+                    loop = loop + 1 
+        except:
+            print('exception')
+
+ 
 def get_pay_period():
     start_date = datetime.datetime.strptime(min(datetimes), "%m/%d/%y")
 
     end_date = start_date + datetime.timedelta(days=14)
     print(start_date)
     print(end_date)
-'''
+
             
 #creates list for super email names of employees and dates worked.        
 make_list(4, datetimes)
 make_list(1, employee_names)
 make_list(6, super_email)
-#get_pay_period()
+get_pay_period()
 
 print(datetimes)
 print(employee_names)
