@@ -26,14 +26,14 @@ def make_list(col, list) :
         val = hours_sheet.cell(loop, col).value
         
         #makes sure you dont return a blank value to end of list
-        if len(val) > 0:
+        if type(val) == str or type(val) == int:
             #make sure the list has no repeats.
-           if val not in list:
+           if val not in list :
             val = hours_sheet.cell(loop, col).value
             list.append(val)
-            
         else:
             print(list)
+       
 def get_pay_period():
     start_date = datetime.datetime.strptime(min(datetimes), "%m/%d/%y")
 
