@@ -36,7 +36,6 @@ def make_list(col, list) :
  
 def get_pay_period():
     start_date = datetime.datetime.strptime(min(datetimes), "%m/%d/%y")
-
     end_date = start_date + datetime.timedelta(days=14)
     print(start_date)
     print(end_date)
@@ -51,3 +50,4 @@ get_pay_period()
 print(datetimes)
 print(employee_names)
 print(super_email)
+
