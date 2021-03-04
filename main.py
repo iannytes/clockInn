@@ -31,7 +31,7 @@ def make_list(col, list) :
                     list.append(val)
                     loop = loop + 1 
         except:
-            print('exception')
+            return False
 
  
 def get_pay_period():
