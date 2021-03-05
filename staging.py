@@ -8,11 +8,8 @@ gc = gspread.service_account(filename="sheets_auth.json")
 sh = gc.open_by_key('17aL0l7sOI_S1Xdd9gG1xsYCU72PagJz5kG2qswIXtHw')
 current_date = datetime.datetime.now()
 
-# creates list of dates in program
-datetimes = []
-super_email = []
-employee_names = []
 
+employees = {}
 
 hours_sheet = sh.sheet1
 
@@ -28,21 +25,10 @@ def make_list(col, list) :
             if len(val) > 0 :
             #make sure the list has no repeats.
                 if val not in list :
-                    list.append(val)
+                    list.update({val})
                     loop = loop + 1 
         except:
             return False
 
- 
-def get_pay_period():
-    start_date = datetime.datetime.strptime(min(datetimes), "%m/%d/%y")
-    end_date = start_date + datetime.timedelta(days=14)
-    print(start_date)
-    print(end_date)
-
-            
-#creates list for super email names of employees and dates worked.        
-make_list(4, datetimes)
-make_list(1, employee_names)
-make_list(6, super_email)
-get_pay_period()
+make_list(1, employees)
+print(employees)
