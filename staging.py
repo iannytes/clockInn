@@ -9,7 +9,9 @@ sh = gc.open_by_key('17aL0l7sOI_S1Xdd9gG1xsYCU72PagJz5kG2qswIXtHw')
 current_date = datetime.datetime.now()
 
 
-employees = {}
+worked_hours = {
+
+}
 
 hours_sheet = sh.sheet1
 
@@ -25,10 +27,20 @@ def make_list(col, list) :
             if len(val) > 0 :
             #make sure the list has no repeats.
                 if val not in list :
-                    list.update({val})
-                    loop = loop + 1 
+                    list[val] = hours_sheet.cell(loop, 2).value
+
+                    loop = loop + 1
+                elif:
+                    for names in worked_hours:
+                        if val == names
+                            worked_hours[val] = worked_hours[val] + hours_sheet.cell(loop, 2).value
+
+
         except:
             return False
 
-make_list(1, employees)
-print(employees)
+ 
+            return False
+
+make_list(1, worked_hours)
+print(worked_hours)

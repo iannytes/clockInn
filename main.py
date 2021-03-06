@@ -13,6 +13,9 @@ datetimes = []
 super_email = []
 employee_names = []
 
+worked_hours{
+
+}
 
 hours_sheet = sh.sheet1
 
@@ -28,7 +31,7 @@ def make_list(col, list) :
             if len(val) > 0 :
             #make sure the list has no repeats.
                 if val not in list :
-                    list.append(val)
+                 worked_hours[val] = hours_sheet.cell(loop, 2).value
                     loop = loop + 1 
         except:
             return False
