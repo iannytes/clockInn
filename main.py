@@ -40,13 +40,13 @@ print(datetimes)
 print(employee_names)
 print(super_email)
 
-loop = 1
+loop = 0
+hours_worked = 0
 for name in employee_names:
     for rows in hours_sheet.col_values(2):
         loop = loop + 1 
-        if name == hours_sheet.cell(loop, 1).value :
-            print('match')
-         
-    
-
+        if name == hours_sheet.cell(loop, 1).value:
+            hours_worked = int(hours_sheet.cell(loop, 2).value) + hours_worked
+            print(hours_worked)
+            
         
