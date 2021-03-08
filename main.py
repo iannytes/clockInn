@@ -39,3 +39,14 @@ get_pay_period()
 print(datetimes)
 print(employee_names)
 print(super_email)
+
+loop = 1
+for name in employee_names:
+    for rows in hours_sheet.col_values(2):
+        loop = loop + 1 
+        if name == hours_sheet.cell(loop, 1).value :
+            print('match')
+         
+    
+
+        
