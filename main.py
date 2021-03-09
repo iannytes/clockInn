@@ -7,6 +7,7 @@ current_date = datetime.datetime.now()
 datetimes = []
 super_email = []
 employee_names = []
+hour_match = []
 hours_sheet = sh.sheet1
 #Check all dates in sheet and add them to list (date col is 4)
 def make_list(col, list) :
@@ -31,6 +32,17 @@ def get_pay_period():
     print(start_date)
     print(end_date)
             
+
+def get_hour(name,):
+    loop = 0
+    global hours_worked
+    hours_worked = 0
+    for rows in hours_sheet.col_values(2):
+        loop = loop + 1 
+        if name == hours_sheet.cell(loop, 1).value:
+            hours_worked = int(hours_sheet.cell(loop, 2).value) + hours_worked
+
+           
 #creates list for super email names of employees and dates worked.        
 make_list(4, datetimes)
 make_list(1, employee_names)
@@ -40,13 +52,13 @@ print(datetimes)
 print(employee_names)
 print(super_email)
 
-loop = 0
-hours_worked = 0
+
 for name in employee_names:
-    for rows in hours_sheet.col_values(2):
-        loop = loop + 1 
-        if name == hours_sheet.cell(loop, 1).value:
-            hours_worked = int(hours_sheet.cell(loop, 2).value) + hours_worked
-            print(hours_worked)
+    get_hour(name)
+    hour_match.append(hours_worked)
+
+    
+
+print(employee_names, hour_match)
             
         
