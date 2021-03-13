@@ -1,5 +1,8 @@
 import gspread
 import datetime
+import os
+import smtplib
+
 gc = gspread.service_account(filename="sheets_auth.json")
 sh = gc.open_by_key('17aL0l7sOI_S1Xdd9gG1xsYCU72PagJz5kG2qswIXtHw')
 current_date = datetime.datetime.now()
@@ -29,6 +32,8 @@ def make_list(col, list) :
 
 #gets two weeks from the earliest submitted date of work
 def get_pay_period():
+    global start_date
+    global end_date
     start_date = datetime.datetime.strptime(min(datetimes), "%m/%d/%y")
     end_date = start_date + datetime.timedelta(days=14)
     print(start_date)
@@ -44,8 +49,34 @@ def get_hour(name):
         if name == hours_sheet.cell(loop, 1).value:
             hours_worked = int(hours_sheet.cell(loop, 2).value) + hours_worked
 
-def email_alert():
-    print('goes to email')
+def email_alert(loop):
+    recipient = str(super_email[loop])
+    subject = 'Verifying Hours Worked'
+    msg = 'Hello, I am a bot, I am contacting you to verify ' + str(employee_names[loop] + ' worked a total of *' + str(hour_match[loop]) + '* hours between' + str(start_date) + ' and ' + str(end_date))
+    print(recipient)
+    print(subject)
+    print(msg)
+    send_email_alert('ian@medyxhealth.com', subject, msg)
+
+
+def send_email_alert(recipient, subject, msg):
+    
+    #sets up access to mailserver base on the user info located in .zshrc or whatever the defaul shell is
+    email_username = os.environ.get('email_username')
+    email_password = os.environ.get('email_python_password')
+    
+    server = smtplib.SMTP('smtp.gmail.com')
+    server.connect('smtp.gmail.com', '587')
+    server.ehlo()
+    server.starttls()
+    server.login(email_username, email_password)
+  
+    #  formats the email to be sent properly by .sendmail
+    email = f'Subject: {subject}\n\n{msg}'
+
+    server.sendmail(email_username, recipient, email)
+
+
            
 #creates list for super email, names of employees, and dates worked.        
 make_list(4, datetimes)
@@ -63,14 +94,17 @@ for name in employee_names:
 
 print(hour_match)
 loop = 0
+
 for name in employee_names:
-    permission_to_email = input('Would you like to submit -' + str(hour_match[loop]) + '- hours worked for ' + str(employee_names[loop]) + '? [y/n]')
-    if permission_to_email.upper == 'Y' :
-        email_alert(loop)
-        loop = loop + 1 
+    permission_to_email = input('Would you like to submit *' + str(hour_match[loop]) + '* hours worked for ' + str(employee_names[loop]) + '? [y/n]')
+
+    if permission_to_email.upper() == 'Y' :
+            email_alert(loop)
+            print('calling loop')
+            loop = loop + 1 
     else :
-        permission_to_email = 'null'
-        loop = loop + 1
+            permission_to_email = 'null'
+            loop = loop + 1
 
 
             
